@@ -5,7 +5,6 @@ import routes from './routerConfig.js'
 import VueSource from 'vue-resource'
 Vue.use(VueRouter)
 Vue.use(VueSource)
-//组件通信中间件
 
 let Hub = new Vue();
 let router = new VueRouter({

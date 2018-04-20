@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Top></Top>
-    <router-view :page="page"></router-view>
+    <transition leave-active-class="bounceOutRight">
+      <router-view :page="page" class="animated"></router-view>
+    </transition>
     <Footer @change="change"></Footer>
   </div>
 </template>
@@ -14,7 +16,7 @@
   export default {
   data:function(){
     return {
-      page:''
+      page:'',
     }
   },
   methods:{
