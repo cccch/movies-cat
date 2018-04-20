@@ -1,4 +1,4 @@
-# cch
+# moviecat
 
 > A Vue.js project
 
