@@ -6,7 +6,6 @@ import VueSource from 'vue-resource'
 Vue.use(VueRouter)
 Vue.use(VueSource)
 
-let Hub = new Vue();
 let router = new VueRouter({
   routes:routes
 });

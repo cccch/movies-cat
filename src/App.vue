@@ -25,8 +25,6 @@
       this.page = data
     }
   },
-    mounted:function(){
-    },
   components:{
     Top:Top,
     Footer:Footer,
@@ -43,7 +41,5 @@
 }
 html,body {
   height: 100%;
-
-
 }
 </style>
