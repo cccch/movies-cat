@@ -1,8 +1,7 @@
 <template>
-    <div>
+    <div id="top">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
@@ -11,6 +10,10 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">电影列表</a>
+                </div>
+                <div class="navbar-search">
+                    <div class="navbar-search-inp"><input type = "text" name = "search" v-model="key" @keydown.enter="postKey"/></div>
+                    <button  class="navbar-search-ico"><router-link to="/search"><span class="glyphicon glyphicon-search" @click="postKey"></span></router-link></button>
                 </div>
             </div>
         </nav>
@@ -31,43 +34,78 @@
                     top250:'Top250',
                     inComing:'即将上映',
                 },
-                target:0
+                target:0,
+                //搜索关键词
+                key:''
             }
         },
+        methods:{
+            postKey:function(){
+                this.$emit('getKey',this.key);
+
+
+
+            }
+        }
     }
 
 
 </script>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-    body {
 
+    #top .navbar {
+        margin-bottom: 15px;
     }
     .select {
         background-color: #428bca;
-    }
-    .select a {
         color: #fff;
-        text-decoration: none;
-
-
     }
-    .list-group-item a {
+    .list-group-item {
         text-decoration: none;
         display: inline-block;
         width: 100%;
         height: 100%;
+        font: 400 17px/28px 'microsoft yahei';
     }
-    a:hover{
-        text-decoration: none;
+    .list-group-item a:hover{
+        /*text-decoration: none;*/
+    }
+    .navbar-search {
+        height: 30px;
+        width: 300px;
+        /*background-color: pink;*/
+        position: absolute;
+        right: 80px;
+    }
+    .navbar-search-inp {
+
+    }
+    .navbar-search-ico {
+        float: left;
+        position: absolute;
+        left: 210px;
+        top: 8px;
+        border-radius: 30%;
+        outline: none;
+    }
+    .navbar-search-ico span {
+        font-size: 24px;
+    }
+    .navbar-search-inp input {
+        width: 200px;
+        height: 30px;
+        outline: none;
+        appearance: none;
+        background-color: #eee;
+        margin-top: 10px;
     }
     #list-group {
         width: 20%;
         float: left;
-        margin-top: -20px;
+        /*margin-top: 10px;*/
+    }
+    .list-group ul li {
+        height: 50px;
     }
 </style>

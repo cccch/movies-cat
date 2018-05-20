@@ -1,22 +1,24 @@
 <template>
-    <div class="contain-fluid" id="main">
+    <div class="contain-fluid" id="top250">
         <div class="con">
             <div class="media" v-for="(value) in moviesObj">
                 <div class="media-left">
-                    <a href="javascript:">
-                        <img class="media-object" :src="value.images.small"width="100px" alt="...">
+                    <a :href="value.alt" target="_blank">
+                        <img class="media-object" :src="value.images.small"width="120px" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">{{value.title}}</h4>
                     <p>主演:<span v-for="v in value.casts">{{v.name}}&nbsp&nbsp</span></p>
-                    <p>导演:<span>{{value.directors[0].name}}</span></p>
+                    <p>导演:<span v-for="v in value.directors">{{v.name}}</span></p>
                     <p>年份:<span>{{value.year}}</span></p>
                     <p>评分:<span>{{value.rating.average}}</span></p>
-                    <p>电影类型:<span>{{value.genres[0]}}</span>&nbsp&nbsp<span>{{value.genres[1]}}</span>&nbsp&nbsp<span>{{value.genres[2]}}</span></p>
+                    <p>电影类型:<span v-for="v in value.genres">{{v}}&nbsp&nbsp</span></p>
+                    <span class="media-body-right"><a :href="value.alt" target="_blank">点击这里了解详情</a></span>
                 </div>
             </div>
         </div>
+        <!--在页面上挂载computed，以便于检测变化-->
         <p v-show="false">{{changePage}}</p>
     </div>
 </template>
@@ -37,12 +39,9 @@
                         count:count
                     }
                 }).then(function(res){
-                    res.data.subjects.forEach(function(v,i){
-                        if(moviesObj.length == 5){
-                            moviesObj.shift();
-                        }
-                        moviesObj.push(v);
-                    })
+                        this.moviesObj = res.data.subjects;
+                        let searchFull = document.getElementById('search-full');
+                        searchFull.style.display = 'none';
                 })
             }
         },
@@ -52,6 +51,8 @@
         computed:{
             //监听page更新电影列表
             changePage:function(){
+                let searchFull = document.getElementById('search-full');
+                searchFull.style.display = 'block';
                 this.getdata('https://api.douban.com/v2/movie/top250',this.page*5-5,5);
                 return this.page;
             }
@@ -63,14 +64,19 @@
 </script>
 
 <style>
-    #main {
-        /*height: 700px;*/
-        margin-top: -20px;
+    #top250 {
         padding-left:20%;
     }
     .con {
-        /*background-color: pink;*/
         width: 100%;
         height: 100%;
+    }
+    .media {
+        position: relative;
+    }
+    .media-body-right {
+        position: absolute;
+        bottom: 10px;
+        left: 400px;
     }
 </style>

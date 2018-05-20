@@ -1,5 +1,5 @@
 <template>
-    <div class="contain-fluid" id="now">
+    <div class="contain-fluid" id="search">
         <div class="con">
             <div class="media" v-for="(value) in moviesObj">
                 <div class="media-left">
@@ -18,8 +18,9 @@
                 </div>
             </div>
         </div>
-        <!--在页面上挂载computed，以便于检测变化-->
+        <!--在页面上挂载两个computed，以便于检测变化-->
         <p v-show="false">{{changePage}}</p>
+        <p v-show="false">{{changeSkey}}</p>
     </div>
 </template>
 
@@ -28,17 +29,20 @@
     export default {
         data: function () {
             return {
-                moviesObj:moviesObj
+                moviesObj:moviesObj,
             }
         },
+        props:['skey','page'],
         methods:{
-            getdata:function(url,start,count){
+            //获取豆瓣电影数据
+            getdata:function(url,q,start,count){
                 this.$http.jsonp(url,{
                     params:{
                         start:start,
-                        count:count
+                        count:count,
+                        q:q
                     }
-                }).then(function(res) {
+                }).then(function(res){
                     this.moviesObj = res.data.subjects;
                     let searchFull = document.getElementById('search-full');
                     searchFull.style.display = 'none';
@@ -46,28 +50,29 @@
             }
         },
         mounted:function(){
-            this.getdata('https://api.douban.com/v2/movie/in_theaters',0,5);
-            console.log(this.moviesObj);
+            this.getdata('https://api.douban.com/v2/movie/search',this.skey,0,5);
 
         },
         computed:{
-            //监听page更新电影列表
             changePage:function(){
                 let searchFull = document.getElementById('search-full');
                 searchFull.style.display = 'block';
-                this.getdata('https://api.douban.com/v2/movie/in_theaters',this.page*5-5,5);
+                this.getdata('https://api.douban.com/v2/movie/search',this.skey,this.page*5-5,5);
                 return this.page;
+            },
+            changeSkey:function(){
+                this.getdata('https://api.douban.com/v2/movie/search',this.skey,0,5);
+                return this.skey;
             }
-        },
-        //接受父组件传入的page
-        props:['page']
+        }
     }
 
 </script>
 
 <style>
-    #now {
+    #search {
         padding-left:20%;
+        height: 100%;
     }
     .con {
         width: 100%;
@@ -81,4 +86,6 @@
         bottom: 10px;
         left: 400px;
     }
+
+
 </style>
