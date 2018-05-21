@@ -4,7 +4,7 @@
             <div class="media" v-for="(value) in moviesObj">
                 <div class="media-left">
                     <a :href="value.alt" target="_blank">
-                        <img class="media-object" :src="value.images.small"width="120px" alt="...">
+                        <img class="media-object" :src="value.images.small"width="120px" height="166px" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
@@ -47,15 +47,19 @@
         },
         mounted:function(){
             this.getdata('https://api.douban.com/v2/movie/in_theaters',0,5);
-            console.log(this.moviesObj);
 
         },
         computed:{
             //监听page更新电影列表
             changePage:function(){
                 let searchFull = document.getElementById('search-full');
-                searchFull.style.display = 'block';
+//                console.log(searchFull.style['display']);
                 this.getdata('https://api.douban.com/v2/movie/in_theaters',this.page*5-5,5);
+                if(searchFull){
+                    searchFull.style.display = 'block';
+                }
+//                console.log(searchFull.style['display']);
+
                 return this.page;
             }
         },

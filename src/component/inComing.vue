@@ -4,7 +4,7 @@
             <div class="media" v-for="(value) in moviesObj">
                 <div class="media-left">
                     <a :href="value.alt" target="_blank">
-                        <img class="media-object" :src="value.images.small"width="120px" alt="...">
+                        <img class="media-object" :src="value.images.small"width="120px" height="166px" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
@@ -54,7 +54,9 @@
             //监听page更新电影列表
             changePage:function(){
                 let searchFull = document.getElementById('search-full');
-                searchFull.style.display = 'block';
+                if(searchFull){
+                    searchFull.style.display = 'block';
+                }
                 this.getdata('https://api.douban.com/v2/movie/coming_soon',this.page*5-5,5);
                 return this.page;
             }

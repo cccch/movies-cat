@@ -13,7 +13,7 @@
                 </div>
                 <div class="navbar-search">
                     <div class="navbar-search-inp"><input type = "text" name = "search" v-model="key" @keydown.enter="postKey"/></div>
-                    <button  class="navbar-search-ico"><router-link to="/search"><span class="glyphicon glyphicon-search" @click="postKey"></span></router-link></button>
+                    <router-link to="/search" ><button  @click="postKey" class="navbar-search-ico"><span class="glyphicon glyphicon-search" ></span></button></router-link>
                 </div>
             </div>
         </nav>

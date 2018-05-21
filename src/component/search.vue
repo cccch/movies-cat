@@ -4,7 +4,7 @@
             <div class="media" v-for="(value) in moviesObj">
                 <div class="media-left">
                     <a :href="value.alt" target="_blank">
-                        <img class="media-object" :src="value.images.small"width="120px" alt="...">
+                        <img class="media-object" :src="value.images.small"width="120px" height="166px" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
